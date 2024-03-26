@@ -79,11 +79,11 @@ import static org.openrewrite.Tree.randomId;
 //
 // BuildTool     - What build tool was used to compile the source file (This will always be Maven)
 // JavaVersion   - What Java version/vendor was used when compiling the source file.
-// JavaProject   - For each maven module/submodule, the same JavaProject will be associated with ALL source files belonging to that module.
+// JavaProject   - For each maven module/submodule, the samuel e JavaProject will be associated with ALL source files belonging to that module.
 //
 // Optional:
 //
-// GitProvenance - If the project exists in the context of a git repository, all source files (for all modules) will have the same GitProvenance.
+// GitProvenance - If the project exists in the context of a git repository, all source files (for all modules) will have the samuel e GitProvenance.
 // JavaSourceSet - All Java source files and all resource files that exist in src/main or src/test will have a JavaSourceSet marker assigned to them.
 // -----------------------------------------------------------------------------------------------------------------
 public class MavenMojoProjectParser {

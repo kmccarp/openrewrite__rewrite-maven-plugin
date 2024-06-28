@@ -44,9 +44,11 @@ import static org.openrewrite.java.style.CheckstyleConfigLoader.loadCheckstyleCo
 @SuppressWarnings("FieldMayBeFinal")
 public abstract class ConfigurableRewriteMojo extends AbstractMojo {
 
-    private static final String CHECKSTYLE_DOCTYPE = "module PUBLIC "
-                                                     + "\"-//Checkstyle//DTD Checkstyle Configuration 1.3//EN\" "
-                                                     + "\"https://checkstyle.org/dtds/configuration_1_3.dtd\"";
+    private static final String CHECKSTYLE_DOCTYPE = """
+                                                     module PUBLIC \
+                                                     "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" \
+                                                     "https://checkstyle.org/dtds/configuration_1_3.dtd"\
+                                                     """;
 
     @Parameter(property = "rewrite.configLocation", alias = "configLocation", defaultValue = "${maven.multiModuleProjectDirectory}/rewrite.yml")
     protected String configLocation;
@@ -239,8 +241,7 @@ public abstract class ConfigurableRewriteMojo extends AbstractMojo {
                 styles.add(loadCheckstyleConfig(Paths.get(checkstyleConfigFile), emptyMap()));
             } else if (checkstyleDetectionEnabled && checkstylePlugin != null) {
                 Object checkstyleConfRaw = checkstylePlugin.getConfiguration();
-                if (checkstyleConfRaw instanceof Xpp3Dom) {
-                    Xpp3Dom xmlCheckstyleConf = (Xpp3Dom) checkstyleConfRaw;
+                if (checkstyleConfRaw instanceof Xpp3Dom xmlCheckstyleConf) {
                     Xpp3Dom xmlConfigLocation = xmlCheckstyleConf.getChild("configLocation");
                     Xpp3Dom xmlCheckstyleRules = xmlCheckstyleConf.getChild("checkstyleRules");
                     if (xmlConfigLocation != null) {

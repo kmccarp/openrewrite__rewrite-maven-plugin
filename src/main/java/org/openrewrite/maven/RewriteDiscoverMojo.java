@@ -99,7 +99,7 @@ public class RewriteDiscoverMojo extends AbstractRewriteMojo {
         return recipeDescriptors.stream()
                 .filter(r -> r.getName().equalsIgnoreCase(recipe))
                 .findAny()
-                .orElseThrow(() -> new MojoExecutionException(String.format(RECIPE_NOT_FOUND_EXCEPTION_MSG, recipe)));
+                .orElseThrow(() -> new MojoExecutionException(RECIPE_NOT_FOUND_EXCEPTION_MSG.formatted(recipe)));
     }
 
     private void writeDiscovery(Collection<RecipeDescriptor> availableRecipeDescriptors, Collection<RecipeDescriptor> activeRecipeDescriptors, Collection<NamedStyles> availableStyles) {

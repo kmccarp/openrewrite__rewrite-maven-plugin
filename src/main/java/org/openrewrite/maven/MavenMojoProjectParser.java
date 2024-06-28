@@ -576,8 +576,8 @@ public class MavenMojoProjectParser {
             Path path = baseDir.resolve(document.getSourcePath());
             MavenProject mavenProject = projectsByPath.get(path);
             if (mavenProject != null) {
-                if (document instanceof Xml.Document) {
-                    projectMap.put(mavenProject, (Xml.Document) document);
+                if (document instanceof Xml.Document document1) {
+                    projectMap.put(mavenProject, document1);
                 } else if (document instanceof ParseError) {
                     logError(mavenProject, "Parse error in Maven Project File '" + path + "': " + document);
                 }

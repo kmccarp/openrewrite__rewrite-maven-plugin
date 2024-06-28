@@ -55,7 +55,7 @@ public class RecipeDescriptorTreePrompter {
                 counter++;
                 String answer = String.valueOf(counter);
                 answerSet.put(answer, option);
-                query.append(String.format(INDEX_TO_ANSWER_MAPPING_MSG, answer, option.getDisplayName()));
+                query.append(INDEX_TO_ANSWER_MAPPING_MSG.formatted(answer, option.getDisplayName()));
             }
 
             String prompted;
@@ -74,7 +74,7 @@ public class RecipeDescriptorTreePrompter {
                     query.append(INPUT_SELECTION_MUST_BE_NUMBER_PROMPT);
                 } else if (answerSet.get(prompted) == null) {
                     // is your number input found in the set of options?
-                    query.append(String.format(YOUR_SELECTION_NOT_IN_OPTIONS_PROMPT, prompted));
+                    query.append(YOUR_SELECTION_NOT_IN_OPTIONS_PROMPT.formatted(prompted));
                 }
             } while (answerSet.get(prompted) == null);
             selection = answerSet.get(prompted);

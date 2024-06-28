@@ -78,8 +78,8 @@ public abstract class AbstractRewriteBaseRunMojo extends AbstractRewriteMojo {
             Metrics.addRegistry(meterRegistryProvider.registry());
 
             Path repositoryRoot = repositoryRoot();
-            getLog().info(String.format("Using active recipe(s) %s", getActiveRecipes()));
-            getLog().info(String.format("Using active styles(s) %s", getActiveStyles()));
+            getLog().info("Using active recipe(s) %s".formatted(getActiveRecipes()));
+            getLog().info("Using active styles(s) %s".formatted(getActiveStyles()));
             if (getActiveRecipes().isEmpty()) {
                 return new ResultsContainer(repositoryRoot, emptyList());
             }
@@ -92,9 +92,11 @@ public abstract class AbstractRewriteBaseRunMojo extends AbstractRewriteMojo {
 
             Recipe recipe = env.activateRecipes(getActiveRecipes());
             if (recipe.getRecipeList().isEmpty()) {
-                getLog().warn("No recipes were activated. " +
-                              "Activate a recipe with <activeRecipes><recipe>com.fully.qualified.RecipeClassName</recipe></activeRecipes> in this plugin's <configuration> in your pom.xml, " +
-                              "or on the command line with -Drewrite.activeRecipes=com.fully.qualified.RecipeClassName");
+                getLog().warn("""
+                              No recipes were activated. \
+                              Activate a recipe with <activeRecipes><recipe>com.fully.qualified.RecipeClassName</recipe></activeRecipes> in this plugin's <configuration> in your pom.xml, \
+                              or on the command line with -Drewrite.activeRecipes=com.fully.qualified.RecipeClassName\
+                              """);
                 return new ResultsContainer(repositoryRoot, emptyList());
             }
 
@@ -144,14 +146,14 @@ public abstract class AbstractRewriteBaseRunMojo extends AbstractRewriteMojo {
         if (exportDatatables) {
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss-SSS"));
             Path datatableDirectoryPath = Paths.get("target", "rewrite", "datatables", timestamp);
-            getLog().info(String.format("Printing Available Datatables to: %s", datatableDirectoryPath));
+            getLog().info("Printing Available Datatables to: %s".formatted(datatableDirectoryPath));
             recipeRun.exportDatatablesToCsv(datatableDirectoryPath, ctx);
         }
 
         return recipeRun.getChangeset().getAllResults().stream().filter(source -> {
             // Remove ASTs originating from generated files
             if (source.getBefore() != null) {
-                return !source.getBefore().getMarkers().findFirst(Generated.class).isPresent();
+                return source.getBefore().getMarkers().findFirst(Generated.class).isEmpty();
             }
             return true;
         }).collect(toList());
